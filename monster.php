@@ -4,7 +4,7 @@ class Monster{
     private $strength;
     private $life;
     private $type;
-    
+
     function __construct($nameP, $strengthP, $lifeP, $typeP){
         $this->name = $nameP;
         $this->strength = $strengthP;
