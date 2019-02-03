@@ -1,6 +1,34 @@
 <?php
 require __DIR__ . '/monster.php';
 
+//_______________BDD__________________
+function getMonsterBDD() {
+    try {
+        $myPDO = new PDO('mysql:host=localhost;dbname=monstre', 'root', 'newPass');
+    }
+    catch(Exception $e){
+        die("Erreur : ". $e->getMessage());
+    }
+    $result = $myPDO-> prepare('SELECT * FROM monstres');
+    $result -> execute();
+    $monsters = array();
+
+    foreach ($result -> fetchAll() as $monster ) {
+        $monsters[] = new Monster($monster['name'],$monster['strength'],$monster['life'],$monster['type']);
+    }
+
+    return $monsters;
+    //$result -> closeCursor();
+}
+
+function addMonstreBDD ($name, $strength, $life, $type) {
+    $myPDO = new PDO('mysql:host=localhost;dbname=monstre', 'root', 'newPass');
+    $query = $myPDO -> prepare("INSERT INTO monstres VALUES ('$name', '$strength', '$life', '$type')");
+    $query -> execute();
+
+}
+
+
 //_______________Objet__________________
 function getMonstersObjet()
 {
@@ -42,11 +70,18 @@ function getMonsters()
         ],
     ];
 }
+/* L'SQL
+insert into monstres values('Domovoï', 30, 300, 'water');
+insert into monstres values('Wendigos', 100, 450, 'earth');
+insert into monstres values('Thunderbird', 400, 500, 'air');
+insert into monstres values('Sirrush', 250, 1500, 'fire');
+*/
+
+
 
 /**
  * Our complex fighting algorithm!
- *
- * @return array With keys winning_ship, losing_ship & used_jedi_powers
+ *@return array With keys winning_ship, losing_ship & used_jedi_powers
  */
 function fight(array $firstMonster, array $secondMonster)
 {

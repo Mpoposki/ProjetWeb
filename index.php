@@ -1,8 +1,7 @@
 <?php
 
 require __DIR__ . '/functions.php';
-
-$monsters = getMonstersObjet();
+$monsters = getMonsterBDD();
 
 ?>
 
@@ -67,26 +66,39 @@ $monsters = getMonstersObjet();
                 </tbody>
             </table>
         </div>
-            <div class="row border p-3">
-                <div class="form-group col-md-6 offset-md-3">
-                    <form method="POST" action="fight.php">
-                        <h2 class="text-center">The battle</h2>
-                        <select class=" form-control" name="first_monster_name">
-                            <option value="">Choose a Monster</option>
-                            <?php foreach ($monsters as $key => $monster) { ?>
-                                <option value="<?php echo $key; ?>"><?php echo $monster->getName(); ?></option>
-                            <?php } ?>
-                        </select>
-                        <br>
+        <form method="POST" action="addMonstre.php">
+            <label for="name"><b>Nom</b></label>
+                <input type="text" placeholder="Nom du Monstre" name="name" required>
+            <label for="text"><b>Strength</b></label>
+                <input type="text" placeholder="Strength" name="strength" required>
+            <label for="text"><b>Life</b></label>
+                <input type="text" placeholder="life" name="life" required>
+            <label for="text"><b>Type</b></label>
+                <input type="text" placeholder="Type" name="type" required>
+            <button class="btn btn-md btn-danger center-block" type="submit" >Add Monstre</button>
+        </form>
+        
+
+        <div class="row border p-3">
+            <div class="form-group col-md-6 offset-md-3">
+                <form method="POST" action="fight.php">
+                    <h2 class="text-center">The battle</h2>
+                    <select class=" form-control" name="first_monster_name">
+                        <option value="">Choose a Monster</option>
+                        <?php foreach ($monsters as $key => $monster) { ?>
+                            <option value="<?php echo $key; ?>"><?php echo $monster->getName(); ?></option>
+                        <?php } ?>
+                    </select>
+                    <br>
                         <p class="text-center">AGAINST</p>
-                        <br>
-                        <select class="form-control" name="second_monster_name">
-                            <option value="">Choose a Monster</option>
-                            <?php foreach ($monsters as $key => $monster) { ?>
-                                <option value="<?php echo $key; ?>"><?php echo $monster->getName(); ?></option>
-                            <?php } ?>
-                        </select>
-                        <br>
+                    <br>
+                    <select class="form-control" name="second_monster_name">
+                        <option value="">Choose a Monster</option>
+                        <?php foreach ($monsters as $key => $monster) { ?>
+                            <option value="<?php echo $key; ?>"><?php echo $monster->getName(); ?></option>
+                        <?php } ?>
+                    </select>
+                    <br>
                         <button class="btn btn-md btn-danger center-block" type="submit">Fight!</button>
                     </form>
                 </div>
